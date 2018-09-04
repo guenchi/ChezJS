@@ -1,4 +1,6 @@
-(import (match match)(core string))
+(import 
+    (match match)
+    (core string))
 
 (define parser
     (lambda ls
@@ -6,6 +8,8 @@
             ((var ,i #\= ,x #\;)`(define ,i ,x))
             ((let ,i #\= ,x #\;)`(define ,i ,x))
             ((const ,i #\= ,x #\;)`(define ,i ,x))
+            ((function  #\( ,x #\) #\{ ,e #\})`(lambda (,x) ,e))
+            ((function  #\( ,x #\, ,y #\) #\{ ,e #\})`(lambda (,x ,y) ,e))
             ((function ,f #\( ,x #\) #\{ ,e #\})`(define (,f ,x) ,e))
             ((function ,f #\( ,x #\, ,y #\) #\{ ,e #\})`(define (,f ,x ,y) ,e))
             ((,f #\( ,x #\) #\;)`(,f ,x))
