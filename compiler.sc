@@ -50,7 +50,7 @@
 
 
       
-(display (apply parser `,(p2 `,(p1 "var i=89;"))))
-(display (apply parser `,(p2 `,(p1 "var j = 100;"))))
-(display (p2 (p1 "function f(x,y){return x+y;}")))
-(display (apply parser `,(p2 `,(p1 "f(i,j);"))))
+(eval (apply parser `,(p2 `,(p1 "var i= 89;"))))
+(eval (apply parser `,(p2 `,(p1 "var j =100;"))))
+(eval (parser 'function 'f #\( 'x #\, 'y #\) #\{ '(+ x y) #\}))
+(display (eval (apply parser `,(p2 `,(p1 "f(i,j);")))))
