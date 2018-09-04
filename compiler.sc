@@ -36,7 +36,9 @@
                                     (#\xA (loop y))
                                     (else (cons x (loop y)))))))) #\space)))
  
-     (define p2
+ 
+ 
+    (define p2
         (lambda (lst)
             (define f
                 (lambda (str)
@@ -50,6 +52,25 @@
             (if (null? lst)
                 '()
                 (cons (f (car lst)) (p2 (cdr lst))))))
+ 
+ 
+ 
+ 
+    (define p3
+        (lambda (lst)
+            (let loop ((x (car lst))(y (cdr lst))(n 0))
+                (let ((k 
+                        (if (null? y)
+                            '()
+                            (loop (car y) (cdr y) (+ 1 n)))))
+                    (if (equal? x #\;)
+                        (cons n k)
+                        k)))))
+ 
+ 
+ 
+
+ 
  
  
     (define parser
