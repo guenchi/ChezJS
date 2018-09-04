@@ -127,6 +127,7 @@
     (define parser
         (lambda ls
             (match ls
+                ((,i #\= ,x #\;)`(set! ,i ,x))
                 ((var ,i #\= ,x #\;)`(define ,i ,x))
                 ((let ,i #\= ,x #\;)`(define ,i ,x))
                 ((const ,i #\= ,x #\;)`(define ,i ,x))
