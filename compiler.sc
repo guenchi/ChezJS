@@ -4,13 +4,6 @@
         p2
         p3
         p4
-        p5
-        p6
-        p7
-        p8
-        p9
-        p10
-        p11
         parser
     )
     (import
@@ -72,28 +65,35 @@
         (lambda (lst)
             (let loop ((lst lst)(k '()))
             (if (not (null? lst))
-                (let ((x (car lst))(y (cdr lst)))
+                (let ((x (car lst))(y (cdr lst))(len (length lst)))
                     (cond 
                         ((char? x)
                             (cond
                                 ((equal? x #\;)
                                     (let l ((n 1))
-                                        (if (or (null? (list-tail lst n))
+                                        (if (or (= n len)
                                                 (or-equal? (list-ref lst n) #\} #\{ #\;))
                                             (loop (list-tail lst n) (cons  (p4 (p3 lst 1 (- n 1))) k))
                                             (l (+ 1 n)))))
                                 ((equal? x #\})
-                                    (let l ((n 0))
+                                    (let l ((n 0)(m 0))
                                         (if (equal? (list-ref lst n) #\{)
-                                            (loop (list-tail lst n) (cons  (p4 (p3 lst 1 (- n 1))) (cons x k)))
-                                            (l (+ 1 n)))))
-                                (else (loop (cdr lst) (cons x k)))))
+                                            (if (or (= m len)
+                                                (or-equal? (list-ref lst m) #\} #\;))
+                                                (loop (list-tail lst m)
+                                                        (cons (append (p4 (p3 lst n (- m 1)))
+                                                          (p4 (p3 lst 1 (- n 1))) (cons x '())) k))
+                                                (l n (+ 1 m)))
+                                            (l (+ 1 n)(+ 1 m)))))
+                                (else (loop y (cons x k)))))
                         ((symbol? x)
                             (cond
-                                ((equal? x 'function)
-                                    (loop (cdr lst) (cons x k)))
-                                (else (loop (cdr lst) (cons x k)))))
-                        (else (loop (cdr lst) (cons x k)))))
+                                ((equal? x 'else)
+                                    (loop y (cons x k)))
+                                ((equal? x 'return)
+                                    (loop y (cons x k)))
+                                (else (loop y (cons x k)))))
+                        (else (loop y (cons x k)))))
                     k))))
                                      
  
@@ -101,12 +101,12 @@
     (define parser
         (lambda ls
             (match ls
-                ((,i #\= ,x #\;)`(set! ,i ,x))
-                ((var ,i #\= ,x #\;)`(define ,i ,x))
-                ((let ,i #\= ,x #\;)`(define ,i ,x))
-                ((const ,i #\= ,x #\;)`(define ,i ,x))
+                ((,i #\= ,x)`(set! ,i ,x))
+                ((var ,i #\= ,x)`(define ,i ,x))
+                ((let ,i #\= ,x)`(define ,i ,x))
+                ((const ,i #\= ,x)`(define ,i ,x))
                 ((function  #\( ,x ... #\) #\{ ,e #\})`(lambda (,x ...) ,e))
                 ((function ,f #\( ,x ... #\) #\{ ,e #\})`(define (,f ,x ...) ,e))
-                ((,f #\( ,x ... #\) #\;)`(,f ,x ...)))))
+                ((,f #\( ,x ... #\))`(,f ,x ...)))))
  
  )
