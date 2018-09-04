@@ -91,7 +91,18 @@
                             (loop (car y) (cdr y) (+ 1 n)))))
                     (if (equal? x #\})
                         (cons n k)
-                        k)))))                                 
+                        k)))))   
+                                     
+                                     
+                                     
+                                     
+    (define p6
+        (lambda (lst i j)
+            (let loop ((lst lst)(n i))
+                (if (> n j)
+                    '()
+                    (cons (list-ref lst n) (loop lst (+ 1 n)))))))
+                                     
  
  
     (define parser
