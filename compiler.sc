@@ -30,9 +30,10 @@
                     (if (null? lst)
                         '()
                         (let ((x (car lst))(y (cdr lst)))
-                            (cond
-                                ((or-equal? x #\( #\) #\[ #\] #\{ #\} #\, #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
+                            (case x
+                                ((#\( #\) #\[ #\] #\{ #\} #\, #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
                                     (cons #\space (cons x (cons #\space (loop y)))))
+                                (#\xA (loop y))
                                 (else (cons x (loop y)))))))) #\space)))
 
 
