@@ -61,100 +61,40 @@
  
 
     (define p3
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\;)
-                        (cons n k)
-                        k)))))
-    
-    
-    (define p4
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\=)
-                        (cons n k)
-                        k)))))
-    
-    (define p5
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\{)
-                        (cons n k)
-                        k)))))
-    
-
-    (define p6
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\})
-                        (cons n k)
-                        k)))))
-
-    (define p7
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\()
-                        (cons n k)
-                        k)))))
-
-
-    (define p8
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x #\))
-                        (cons n k)
-                        k)))))
-
-    (define p9
-        (lambda (lst)
-            (let loop ((x (car lst))(y (cdr lst))(n 0))
-                (let ((k 
-                        (if (null? y)
-                            '()
-                            (loop (car y) (cdr y) (+ 1 n)))))
-                    (if (equal? x 'function)
-                        (cons n k)
-                        k)))))
-    
-    (define p10
         (lambda (lst i j)
             (let loop ((lst lst)(n i))
                 (if (> n j)
                     '()
                     (cons (list-ref lst n) (loop lst (+ 1 n)))))))
-    
-    
-    (define p11
-        (lambda (lst x)
-            (let loop ((n 0)(x x))
-                (cons (p10 lst n (car x))
-                    (if (null? (cdr x))
-                        '()
-                        (loop (+ 1 (car x)) (cdr x)))))))
+
+
+    (define p4
+        (lambda (lst)
+            (let loop ((lst lst)(k '()))
+            (if (not (null? lst))
+                (let ((x (car lst))(y (cdr lst)))
+                    (cond 
+                        ((char? x)
+                            (cond
+                                ((equal? x #\;)
+                                    (let l ((n 1))
+                                        (if (or (null? (list-tail lst n))
+                                                (or-equal? (list-ref lst n) #\} #\{ #\;))
+                                            (loop (list-tail lst n) (cons  (p4 (p3 lst 1 (- n 1))) k))
+                                            (l (+ 1 n)))))
+                                ((equal? x #\})
+                                    (let l ((n 0))
+                                        (if (equal? (list-ref lst n) #\{)
+                                            (loop (list-tail lst n) (cons  (p4 (p3 lst 1 (- n 1))) (cons x k)))
+                                            (l (+ 1 n)))))
+                                (else (loop (cdr lst) (cons x k)))))
+                        ((symbol? x)
+                            (cond
+                                ((equal? x 'function)
+                                    (loop (cdr lst) (cons x k)))
+                                (else (loop (cdr lst) (cons x k)))))
+                        (else (loop (cdr lst) (cons x k)))))
+                    k))))
                                      
  
  
