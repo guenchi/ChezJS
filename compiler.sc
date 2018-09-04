@@ -69,7 +69,16 @@
  
  
  
-
+    (define p4
+        (lambda (lst)
+            (let loop ((x (car lst))(y (cdr lst))(n 0))
+                (let ((k 
+                        (if (null? y)
+                            '()
+                            (loop (car y) (cdr y) (+ 1 n)))))
+                    (if (equal? x #\{)
+                        (cons n k)
+                        k)))))
  
  
  
