@@ -132,6 +132,7 @@
                 ((,x #\* ,y)`(* ,x ,y))
                 ((,x #\/ ,y)`(/ ,x ,y))
                 ((,i #\= ,x)`(set! ,i ,x))
+                ((print #\( ,x #\))`(display ,x))
                 ((var ,i #\= ,x)`(define ,i ,x))
                 ((let ,i #\= ,x)`(define ,i ,x))
                 ((const ,i #\= ,x)`(define ,i ,x))
