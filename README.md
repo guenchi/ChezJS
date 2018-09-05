@@ -69,7 +69,7 @@ JavaScript compile to Native Code (with Chez as backend)
  (f #\( i j #\)))
 ```
 
-*p5* -deconstruction list-   todo
+*p5* -deconstruction nesting list-
 
 ```
 (var i #\= 89)
@@ -79,7 +79,7 @@ JavaScript compile to Native Code (with Chez as backend)
 (f #\( i j #\))
 ```
 
-parser -match to Scheme-
+*parser* -match to s-express-
 
 ```
 (define i 89)
