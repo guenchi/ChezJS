@@ -36,14 +36,10 @@
     (import
         (scheme)
         (match match)
-        (core string))
+        (core string)
+        (core condition))
 
 
-
-    (define-syntax or-equal?
-        (syntax-rules ()
-            ((_ x e1)(or (equal? x e1)))
-            ((_ x e1 e2 ...)(or (equal? x e1)(equal? x e2) ...))))
 
  
     (define p1
