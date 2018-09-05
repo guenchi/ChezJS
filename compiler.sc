@@ -32,7 +32,7 @@
         p3
         p4
         p5
-        parser
+        p6
     )
     (import
         (scheme)
@@ -124,7 +124,7 @@
  
     (define p5
         (lambda (lst)
-            (apply parser
+            (apply p6
                 (let loop ((x (car lst))(y (cdr lst)))
                     (if (null? y)
                         (if (list? x)
@@ -136,7 +136,7 @@
 
 
 
-    (define parser
+    (define p6
         (lambda ls
             (match ls
                 ((,x #\+ ,y)`(+ ,x ,y))
