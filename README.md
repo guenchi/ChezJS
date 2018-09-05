@@ -12,7 +12,7 @@ JavaScript compile to Native Code (with Chez as backend)
             
 (print (chezjs "var i = 89; var j = 100; function f(x, y){ x + y;} f(i, j);"))
 (print (chezjs "let a = 2; const b = 9; function f(x, y){ x * y;} f(a, b);"))
-(print (chezjs "let m = 110; var n = 21; function f(x, y){ x - y;} f(m, n);"))
+(print (chezjs "var x = 18; const y = 98; x = y; print(x);"))
 ```
 =>
 ```
@@ -27,5 +27,5 @@ JavaScript compile to Native Code (with Chez as backend)
 #<void>
 #<void>
 #<void>
-89
+98#<void>
 ```
