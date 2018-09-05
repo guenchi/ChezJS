@@ -53,3 +53,37 @@ JavaScript compile to Native Code (with Chez as backend)
 *p2* -rebuild symbol and number-
 
 `(var i #\= 89 #\; var j #\= 100 #\; function f #\( x y #\) #\{ x #\+ y #\; #\} f #\( i j #\) #\;)`
+
+*reverse*
+
+`(#\; #\) j i #\( f #\} #\; y #\+ x #\{ #\) y x #\( f function #\; 100 #\= j var #\; 89 #\= i var)`
+
+*p4* -parse to list-
+
+```
+((var i #\= 89)
+ (var j #\= 100)
+ (function f #\( x y #\) #\{ 
+     (x #\+ y)
+ #\})
+ (f #\( i j #\)))
+```
+
+*p5* -deconstruction list-   todo
+
+```
+(var i #\= 89)
+(var j #\= 100)
+(function f #\( x y #\) #\{ #\})
+(x #\+ y)
+(f #\( i j #\))
+```
+
+parser -match to Scheme-
+
+```
+(define i 89)
+(define j 100)
+(define (f x y) (+ x y))
+(f i j)
+```
