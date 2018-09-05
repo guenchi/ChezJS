@@ -79,7 +79,7 @@ JavaScript compile to Native Code (with Chez as backend)
 (f #\( i j #\))
 ```
 
-*parser* -match to s-express-
+*p6* -match to s-express-
 
 ```
 (define i 89)
