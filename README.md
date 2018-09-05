@@ -87,3 +87,5 @@ parser -match to Scheme-
 (define (f x y) (+ x y))
 (f i j)
 ```
+
+eval / compile with Chez Scheme
