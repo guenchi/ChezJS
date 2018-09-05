@@ -14,7 +14,7 @@ JavaScript compile to Native Code (with Chez as backend)
 `=> 189`
 
 
-==================PARSE   PROGRESS==============================
+==================PARSE   PROGRESS=====================
 
 `"var i = 89; var j = 100; function f(x, y){ x + y;} f(i, j);"`
 
