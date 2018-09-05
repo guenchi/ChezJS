@@ -3,11 +3,11 @@ JavaScript compile to Native Code (with Chez as backend)
 
 
 ```
-(define x "var i = 89; var j = 100; function f (x , y){ x + y;} f(i, j);")
-(eval (apply parser (car `,(p4 (reverse `,(p2 `,(p1 x)))))))
-(eval (apply parser (cadr `,(p4 (reverse `,(p2 `,(p1 x)))))))
-(eval (parser 'function 'f #\( 'x 'y #\) #\{ '(+ x y) #\}))
-(display (eval (apply parser (cadddr `,(p4 `,(reverse `,(p2 `,(p1 x))))))))
+(define js "var i = 89; var j = 100; function f (x , y){ x + y;} f(i, j);")
+(eval (p5 (car `,(p4 `,(reverse `,(p2 `,(p1 js)))))))
+(eval (p5 (cadr `,(p4 `,(reverse `,(p2 `,(p1 js)))))))
+(eval (p5 (caddr `,(p4 `,(reverse `,(p2 `,(p1 js)))))))
+(display (eval (p5 (cadddr `,(p4 `,(reverse `,(p2 `,(p1 js))))))))
 (newline)
 ```
 
