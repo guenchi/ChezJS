@@ -88,4 +88,4 @@ parser -match to Scheme-
 (f i j)
 ```
 
-eval / compile with Chez Scheme
+Eval / Compile with Chez Scheme
