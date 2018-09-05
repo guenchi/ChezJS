@@ -31,6 +31,7 @@
         p2
         p3
         p4
+        p5
         parser
     )
     (import
@@ -121,9 +122,27 @@
                                      
  
  
+    (define p5
+        (lambda (lst)
+            (apply parser
+                (let loop ((x (car lst))(y (cdr lst)))
+                    (if (null? y)
+                        (if (list? x)
+                            (cons (p5 x) '())
+                            (cons x '()))
+                        (if (list? x)
+                            (cons (p5 x) (loop (car y) (cdr y)))
+                            (cons x (loop  (car y) (cdr y)))))))))
+
+
+
     (define parser
         (lambda ls
             (match ls
+                ((,x #\+ ,y)`(+ ,x ,y))
+                ((,x #\- ,y)`(- ,x ,y))
+                ((,x #\* ,y)`(* ,x ,y))
+                ((,x #\/ ,y)`(/ ,x ,y))
                 ((,i #\= ,x)`(set! ,i ,x))
                 ((var ,i #\= ,x)`(define ,i ,x))
                 ((let ,i #\= ,x)`(define ,i ,x))
