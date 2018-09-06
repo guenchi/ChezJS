@@ -124,7 +124,7 @@
  
  
     (define p5
-        (lambda lst
+        (lambda (lst)
             (define Expr
                 (lambda (x)
                     (match x
@@ -155,8 +155,8 @@
         (lambda (lst)
             (let ((x (car lst))(y (cdr lst)))
                 (if (null? y)
-                    (cons (apply p5 x) '())
-                    (cons (apply p5 x)(p6 y))))))
+                    (cons (p5 x) '())
+                    (cons (p5 x)(p6 y))))))
 
 
     (define chezjs
