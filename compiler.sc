@@ -138,9 +138,8 @@
                 ((const ,i #\= ,x)`(define ,i ,x))
                 ((function  #\( ,x ... #\) #\{ ,e #\})`(lambda (,x ...) ,e))
                 ((function ,f #\( ,x ... #\) #\{ ,e #\})`(define (,f ,x ...) ,e))
-                ((function ,f #\( ,x ... #\) #\{ ,e1 ,e2 #\})`(define (,f ,x ...) (begin ,e1 ,e2)))
-                ((function ,f #\( ,x ... #\) #\{ ,e1 ,e2 ,e3 #\})`(define (,f ,x ...) (begin ,e1 ,e2 ,e3)))
-                ((,f #\( ,x ... #\))`(,f ,x ...)))))
+                ((,f #\( ,x ... #\))`(,f ,x ...))
+                ((,e ...)`(begin ,e ...)))))
 
     
     (define p6
