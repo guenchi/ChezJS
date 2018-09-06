@@ -33,7 +33,6 @@
         p4
         p5
         p6
-        p7
         chezjs
     )
     (import
@@ -126,6 +125,16 @@
  
     (define p5
         (lambda lst
+            (define Expr
+                (lambda (x)
+                    (match x
+                        ((,x #\+ ,y)`(+ ,x ,y))
+                        ((,x #\- ,y)`(- ,x ,y))
+                        ((,x #\* ,y)`(* ,x ,y))
+                        ((,x #\/ ,y)`(/ ,x ,y))
+                        ((,i #\= ,x)`(set! ,i ,x))
+                        ((,(Expr -> e))`,e)
+                        ((,(Expr -> e1) ,(Expr -> e2) ...)`(begin ,e1 ,e2 ...)))))
             (match lst
                 ((,x #\+ ,y)`(+ ,x ,y))
                 ((,x #\- ,y)`(- ,x ,y))
@@ -137,35 +146,22 @@
                 ((let ,i #\= ,x)`(define ,i ,x))
                 ((const ,i #\= ,x)`(define ,i ,x))
                 ((function  #\( ,x ... #\) #\{ ,e #\})`(lambda (,x ...) ,e))
-                ((function ,f #\( ,x ... #\) #\{ ,e #\})`(define (,f ,x ...) ,e))
-                ((,f #\( ,x ... #\))`(,f ,x ...))
-                ((,e ...)`(begin ,e ...)))))
+                ((function ,f #\( ,x ... #\) #\{ ,(Expr -> e) #\})`(define (,f ,x ...) ,e))
+                ((,f #\( ,x ... #\))`(,f ,x ...)))))
 
-    
+
+
     (define p6
-        (lambda (lst)
-            (apply p5
-                (let loop ((x (car lst))(y (cdr lst)))
-                    (if (null? y)
-                        (if (list? x)
-                            (cons (p6 x) '())
-                            (cons x '()))
-                        (if (list? x)
-                            (cons (p6 x) (loop (car y) (cdr y)))
-                            (cons x (loop  (car y) (cdr y)))))))))
-
-
-
-    (define p7
         (lambda (lst)
             (let ((x (car lst))(y (cdr lst)))
                 (if (null? y)
-                    (cons (p6 x) '())
-                    (cons (p6 x)(p7 y))))))
+                    (cons (apply p5 x) '())
+                    (cons (apply p5 x)(p6 y))))))
 
 
     (define chezjs
         (lambda (str)
-            (p7 (p4 (reverse (p2 (p1 str)))))))
- 
+            (p6 (p4 (reverse (p2 (p1 str)))))))
+                                                                        
+                                                                        
  )
