@@ -108,7 +108,7 @@
                                                 (or-equal? (list-ref lst m) #\} #\;))
                                                 (loop (list-tail lst m)
                                                         (cons (append (p4 (p3 lst n (- m 1)))
-                                                          (p4 (p3 lst 1 (- n 1))) (cons x '())) k))
+                                                          (list (p4 (p3 lst 1 (- n 1)))) (cons x '())) k))
                                                 (l n (+ 1 m)))
                                             (l (+ 1 n)(+ 1 m)))))
                                 (else (loop y (cons x k)))))
