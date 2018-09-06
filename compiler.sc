@@ -158,17 +158,14 @@
                         ((#\( ,(Arg -> a ...) #\) #\= #\> #\{ ,(Expr -> e) #\})
                             `(lambda (,a ...) ,e)))))
             (match lst
-                ((,(Var -> x) #\+ ,(Var -> y))`(+ ,x ,y))
-                ((,(Var -> x) #\- ,(Var -> y))`(- ,x ,y))
-                ((,(Var -> x) #\* ,(Var -> y))`(* ,x ,y))
-                ((,(Var -> x) #\/ ,(Var -> y))`(/ ,x ,y))
                 ((,i #\= ,x)`(set! ,i ,x))
                 ((print #\( ,x #\))`(display ,x))
                 ((var ,i #\= ,x)`(define ,i ,x))
                 ((let ,i #\= ,x)`(define ,i ,x))
                 ((const ,i #\= ,x)`(define ,i ,x))
                 ((,f #\( ,x ... #\))`(,f ,x ...))
-                (,(Func -> f) `,f))))
+                (,(Func -> f) `,f)
+                (,(Expr -> e) `,e))))
 
 
 
