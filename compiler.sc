@@ -125,29 +125,50 @@
  
     (define p5
         (lambda (lst)
+            (define Var
+                (lambda (x)
+                    (match x
+                        (,v (guard (symbol? v)) v)
+                        (,n (guard (number? n)) n)
+                        ((,(Expr -> e)) `,e))))
             (define Expr
                 (lambda (x)
                     (match x
-                        ((,x #\+ ,y)`(+ ,x ,y))
-                        ((,x #\- ,y)`(- ,x ,y))
-                        ((,x #\* ,y)`(* ,x ,y))
-                        ((,x #\/ ,y)`(/ ,x ,y))
+                        ((,(Var -> x) #\+ ,(Var -> y))`(+ ,x ,y))
+                        ((,(Var -> x) #\- ,(Var -> y))`(- ,x ,y))
+                        ((,(Var -> x) #\* ,(Var -> y))`(* ,x ,y))
+                        ((,(Var -> x) #\/ ,(Var -> y))`(/ ,x ,y))
                         ((,i #\= ,x)`(set! ,i ,x))
-                        ((,(Expr -> e))`,e)
+                        ((,(Expr -> e)) `,e)
                         ((,(Expr -> e1) ,(Expr -> e2) ...)`(begin ,e1 ,e2 ...)))))
+            (define Arg
+                (lambda (x)
+                    (match x
+                        (,v (guard (symbol? v)) v)
+                        ((,(Func -> f)) `,f))))
+            (define Func
+                (lambda (x)
+                    (match x
+                        ((function ,f #\( ,(Arg -> a) ... #\) #\{ ,(Expr -> e) #\})
+                            `(define (,f ,a ...) ,e))
+                        ((function  #\( ,(Arg -> a) ... #\) #\{ ,(Expr -> e) #\})
+                            `(lambda (,a ...) ,e))
+                        ((,(Arg -> a) #\= #\> #\{ ,(Expr -> e) #\})
+                            `(lambda (,a) ,e))
+                        ((#\( ,(Arg -> a ...) #\) #\= #\> #\{ ,(Expr -> e) #\})
+                            `(lambda (,a ...) ,e)))))
             (match lst
-                ((,x #\+ ,y)`(+ ,x ,y))
-                ((,x #\- ,y)`(- ,x ,y))
-                ((,x #\* ,y)`(* ,x ,y))
-                ((,x #\/ ,y)`(/ ,x ,y))
+                ((,(Var -> x) #\+ ,(Var -> y))`(+ ,x ,y))
+                ((,(Var -> x) #\- ,(Var -> y))`(- ,x ,y))
+                ((,(Var -> x) #\* ,(Var -> y))`(* ,x ,y))
+                ((,(Var -> x) #\/ ,(Var -> y))`(/ ,x ,y))
                 ((,i #\= ,x)`(set! ,i ,x))
                 ((print #\( ,x #\))`(display ,x))
                 ((var ,i #\= ,x)`(define ,i ,x))
                 ((let ,i #\= ,x)`(define ,i ,x))
                 ((const ,i #\= ,x)`(define ,i ,x))
-                ((function  #\( ,x ... #\) #\{ ,e #\})`(lambda (,x ...) ,e))
-                ((function ,f #\( ,x ... #\) #\{ ,(Expr -> e) #\})`(define (,f ,x ...) ,e))
-                ((,f #\( ,x ... #\))`(,f ,x ...)))))
+                ((,f #\( ,x ... #\))`(,f ,x ...))
+                (,(Func -> f) `,f))))
 
 
 
