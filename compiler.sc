@@ -138,9 +138,13 @@
                         ((,(Var -> x) #\- ,(Var -> y))`(- ,x ,y))
                         ((,(Var -> x) #\* ,(Var -> y))`(* ,x ,y))
                         ((,(Var -> x) #\/ ,(Var -> y))`(/ ,x ,y))
-                        ((,i #\= ,x)`(set! ,i ,x))
+                        ((,i #\= ,x)`(set! ,i ,x)))))
+            (define Exprs
+                (lambda (x)
+                    (match x
                         ((,(Expr -> e)) `,e)
-                        ((,(Expr -> e1) ,(Expr -> e2) ...)`(begin ,e1 ,e2 ...)))))
+                        ((,(Expr -> e1) ,(Expr -> e2) ...) 
+                            `(begin ,e1 ,e2 ...)))))
             (define Arg
                 (lambda (x)
                     (match x
@@ -149,13 +153,17 @@
             (define Func
                 (lambda (x)
                     (match x
-                        ((function ,f #\( ,(Arg -> a) ... #\) #\{ ,(Expr -> e) #\})
+                        ((function ,f #\( ,(Arg -> a) ... #\) #\{ ,(Exprs -> e) #\})
                             `(define (,f ,a ...) ,e))
-                        ((function  #\( ,(Arg -> a) ... #\) #\{ ,(Expr -> e) #\})
+                        ((function  #\( ,(Arg -> a) ... #\) #\{ ,(Exprs -> e) #\})
                             `(lambda (,a ...) ,e))
-                        ((,(Arg -> a) #\= #\> #\{ ,(Expr -> e) #\})
+                        ((,(Arg -> a) #\= #\> ,(Expr -> e))
                             `(lambda (,a) ,e))
-                        ((#\( ,(Arg -> a ...) #\) #\= #\> #\{ ,(Expr -> e) #\})
+                        ((,(Arg -> a) #\= #\> #\{ ,(Exprs -> e) #\})
+                            `(lambda (,a) ,e))
+                        ((#\( ,(Arg -> a ...) #\) #\= #\> ,(Expr -> e))
+                            `(lambda (,a ...) ,e))
+                        ((#\( ,(Arg -> a ...) #\) #\= #\> #\{ ,(Exprs -> e) #\})
                             `(lambda (,a ...) ,e)))))
             (match lst
                 ((,i #\= ,x)`(set! ,i ,x))
@@ -166,7 +174,6 @@
                 ((,f #\( ,x ... #\))`(,f ,x ...))
                 (,(Func -> f) `,f)
                 (,(Expr -> e) `,e))))
-
 
 
     (define p6
