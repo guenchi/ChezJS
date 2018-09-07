@@ -150,6 +150,28 @@
                     (match x
                         (,v (guard (symbol? v)) v)
                         ((,(Func -> f)) `,f))))
+            (define Test
+                (lambda (x)
+                    (match x
+                        (ture #t)
+                        (false #f)
+                        ((,(Var -> v1) #\< ,(Var -> v2))
+                            (< v1 v2))
+                        ((,(Var -> v1) #\> ,(Var -> v2))
+                            (< v1 v2))
+                        ((,(Var -> v1) #\= ,(Var -> v2))
+                            (equal? v1 v2)))))
+            (define Cond
+                (lambda (x)
+                    (match x
+                        ((if #\( ,(Test -> t) #\) ,(Expr -> e))
+                            `(if ,t ,e))
+                        ((if #\( ,(Test -> t)  #\) #\{ ,(Exprs -> e) #\})
+                            `(if ,t ,e))
+                        ((if #\( ,(Test -> t)  #\) ,(Expr -> e1) else ,(Expr -> e2))
+                            `(if ,t ,e1 ,e2))
+                        ((if #\( ,(Test -> t)  #\) #\{ ,(Exprs -> e1) #\} else #\{ ,(Exprs -> e2) #\})
+                            `(if ,t ,e1 ,e2)))))
             (define Func
                 (lambda (x)
                     (match x
