@@ -1,4 +1,4 @@
-# ChezJS
+# ChezJavascript
 JavaScript compile to Native Code (with Chez as backend)
 
 
