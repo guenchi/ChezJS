@@ -25,7 +25,7 @@
 
 
 
-(library (jscheme compiler)
+(library (chezjs compiler)
     (export
         p1
         p2
@@ -67,9 +67,9 @@
                 (lambda (str)
                     (let ((x (string-ref str 0)))
                         (cond
-                            ((or-equal? x #\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9 #\0) (string->number str))
+                            ((or/equal? x #\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9 #\0) (string->number str))
                             ((> (string-length str) 1)(string->symbol str))
-                            ((or-equal? x #\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
+                            ((or/equal? x #\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
                                 x)
                             (else (string->symbol str))))))
             (if (null? lst)
@@ -97,14 +97,14 @@
                                 ((equal? x #\;)
                                     (let l ((n 1))
                                         (if (or (= n len)
-                                                (or-equal? (list-ref lst n) #\} #\{ #\;))
+                                                (or/equal? (list-ref lst n) #\} #\{ #\;))
                                             (loop (list-tail lst n) (cons  (p4 (p3 lst 1 (- n 1))) k))
                                             (l (+ 1 n)))))
                                 ((equal? x #\})
                                     (let l ((n 0)(m 0))
                                         (if (equal? (list-ref lst n) #\{)
                                             (if (or (= m len)
-                                                (or-equal? (list-ref lst m) #\} #\;))
+                                                (or/equal? (list-ref lst m) #\} #\;))
                                                 (loop (list-tail lst m)
                                                         (cons (append (p4 (p3 lst n (- m 1)))
                                                           (list (p4 (p3 lst 1 (- n 1)))) (cons x '())) k))
