@@ -46,7 +46,7 @@
  
     (define p1
         (lambda (str)
-            (split 
+            (split*
                 (list->string
                     (let loop ((lst (string->list str)))
                         (if (null? lst)
