@@ -36,7 +36,7 @@
         chezjs
     )
     (import
-        (scheme)
+        (chezscheme)
         (match match)
         (core string)
         (core condition))
