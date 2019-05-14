@@ -130,7 +130,7 @@
           (match x
             (,v (guard (symbol? v)) v)
             (,n (guard (number? n)) n)
-            ((,(Expr -> e)) `,e))))
+            ((,(Expr -> e)) e))))
       (define Expr
         (lambda (x)
           (match x
@@ -142,14 +142,14 @@
       (define Exprs
         (lambda (x)
           (match x
-            ((,(Expr -> e)) `,e)
+            ((,(Expr -> e)) e)
             ((,(Expr -> e1) ,(Expr -> e2) ...) 
               `(begin ,e1 ,e2 ...)))))
       (define Arg
         (lambda (x)
           (match x
             (,v (guard (symbol? v)) v)
-            ((,(Func -> f)) `,f))))
+            ((,(Func -> f)) f))))
       (define Test
         (lambda (x)
           (match x
@@ -194,8 +194,8 @@
         ((let ,i #\= ,x) `(define ,i ,x))
         ((const ,i #\= ,x) `(define ,i ,x))
         ((,f #\( ,x ... #\)) `(,f ,x ...))
-        (,(Func -> f) `,f)
-        (,(Expr -> e) `,e))))
+        (,(Func -> f) f)
+        (,(Expr -> e) e))))
 
 
   (define p6
