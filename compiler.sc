@@ -188,8 +188,8 @@
             ((#\( ,(Arg -> a ...) #\) #\= #\> #\{ ,(Exprs -> e) #\})
               `(lambda (,a ...) ,e)))))
       (match lst
-        ((,i #\= ,x)`(set! ,i ,x))
-        ((print #\( ,x #\))`(display ,x))
+        ((,i #\= ,x) `(set! ,i ,x))
+        ((print #\( ,x #\)) `(display ,x))
         ((var ,i #\= ,x) `(define ,i ,x))
         ((let ,i #\= ,x) `(define ,i ,x))
         ((const ,i #\= ,x) `(define ,i ,x))
