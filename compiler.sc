@@ -201,9 +201,9 @@
   (define p6
     (lambda (lst)
       (let ((x (car lst))(y (cdr lst)))
-        (if (null? y)
-          (cons (p5 x) '())
-          (cons (p5 x)(p6 y))))))
+           (if (null? y)
+               (cons (p5 x) '())
+               (cons (p5 x)(p6 y))))))
 
 
   (define chezjs
