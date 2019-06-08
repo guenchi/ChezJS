@@ -50,14 +50,14 @@
         (list->string
           (let loop ((lst (string->list str)))
             (if (null? lst)
-              '()
-              (let ((x (car lst))(y (cdr lst)))
-                (case x
-                  ((#\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
-                    (cons #\space (cons x (cons #\space (loop y)))))
-                  (#\, (cons #\space (loop y)))
-                  (#\xA (loop y))
-                  (else (cons x (loop y)))))))) #\space)))
+                '()
+                (let ((x (car lst))(y (cdr lst)))
+                     (case x
+                        ((#\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
+                         (cons #\space (cons x (cons #\space (loop y)))))
+                        (#\, (cons #\space (loop y)))
+                        (#\xA (loop y))
+                        (else (cons x (loop y)))))))) #\space)))
  
  
  
@@ -66,15 +66,15 @@
       (define f
         (lambda (str)
           (let ((x (string-ref str 0)))
-            (cond
-              ((or/equal? x #\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9 #\0) (string->number str))
-              ((> (string-length str) 1)(string->symbol str))
-              ((or/equal? x #\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
-                x)
-              (else (string->symbol str))))))
+               (cond
+                 ((or/equal? x #\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9 #\0) (string->number str))
+                 ((> (string-length str) 1)(string->symbol str))
+                 ((or/equal? x #\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
+                   x)
+                 (else (string->symbol str))))))
       (if (null? lst)
-        '()
-        (cons (f (car lst)) (p2 (cdr lst))))))
+          '()
+          (cons (f (car lst)) (p2 (cdr lst))))))
  
  
 
@@ -82,8 +82,8 @@
     (lambda (lst i j)
       (let loop ((lst lst)(n i))
         (if (> n j)
-          '()
-          (cons (list-ref lst n) (loop lst (+ 1 n)))))))
+            '()
+            (cons (list-ref lst n) (loop lst (+ 1 n)))))))
 
 
   (define p4
