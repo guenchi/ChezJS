@@ -13,13 +13,13 @@ REPL:
 
 ```
 $ chezjs
->const i = 89;
+> const i = 89;
 #<void>
->var k = 100;
+> var k = 100;
 #<void>
->function f(x, y){x + y;}
+> function f(x, y){x + y;}
 #<void>
->f(i, k);
+> f(i, k);
 189
->
+> 
 ```
