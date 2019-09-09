@@ -1,5 +1,5 @@
 # ChezJavaScript
-JavaScript compile to Native Code (with Chez as backend)
+JavaScript compile to Native Code (with Chez Scheme as backend)
 
 Compile to .so file:
 
