@@ -19,6 +19,21 @@
                     (unless (null? (cdr l))
                         (loop (cdr l))))))))
 
+(define inputloop
+  (lambda ()
+    (display "> ")
+    (display 
+      (eval 
+        (car
+          (js->scheme 
+            (let loop ((c (read-char)))
+              (case c
+                (#\newline '())
+                (else (cons c (loop (read-char))))))))))
+    (newline)
+    (inputloop)))
+
+
 (if (= (length (command-line-arguments)) 1)
     (let* ((source-name (car (command-line-arguments)))
            (output-name (string-append source-name ".sc")))
@@ -26,7 +41,8 @@
       (printer 
         (js->scheme
           (call-with-input-file source-name file-reader)) output-name)
-      (compile-file output-name)))
+      (compile-file output-name))
+    (inputloop))
 
 
 
