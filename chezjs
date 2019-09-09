@@ -3,16 +3,17 @@
 (import (compiler))
 
 
-(define file-reader
-  (lambda (p) 
-    (let f ((k (read-char p)))
-      (if (eof-object? k)
-        '()
-        (cons k (f (read-char p)))))))
+(define read-file
+  (lambda (file)
+    (call-with-input-file file (lambda (p) 
+                                 (let f ((k (read-char p)))
+                                   (if (eof-object? k)
+                                       '()
+                                       (cons k (f (read-char p)))))))))
 
-(define printer
-    (lambda (lst output)
-        (call-with-output-file output
+(define write-file
+    (lambda (file lst)
+        (call-with-output-file file
             (lambda (p)
                 (let loop ((l lst))
                     (display (car l) p)
@@ -38,9 +39,8 @@
     (let* ((source-name (car (command-line-arguments)))
            (output-name (string-append source-name ".sc")))
       (when (file-exists? output-name) (delete-file output-name))
-      (printer 
-        (js->scheme
-          (call-with-input-file source-name file-reader)) output-name)
+      (write-file output-name (js->scheme
+                                (read-file source-name)))
       (compile-file output-name))
     (inputloop))
 
