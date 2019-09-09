@@ -9,3 +9,5 @@
 *.sc~
 *.sc#*
 .#*.sc
+lib/core/
+lib/match/
