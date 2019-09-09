@@ -10,5 +10,5 @@
     ("run" . "scheme --script"))
 ("dependencies" 
     ("match" . "1.0.2")
-    ("core" . "1.3.1"))
+    ("core" . "1.3.2"))
 ("devDependencies"))

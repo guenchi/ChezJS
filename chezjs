@@ -1,24 +1,8 @@
 ":"; export CHEZSCHEMELIBDIRS=.:lib:/usr/local/lib && export CHEZSCHEMELIBEXTS=.chezscheme.sls::.chezscheme.so:.ss::.so:.sls::.so:.scm::.so:.sch::.so:.sc::.so && exec scheme --script $0 "$@";
 
 (import (compiler))
+(import (core file))
 
-
-(define read-file
-  (lambda (file)
-    (call-with-input-file file (lambda (p) 
-                                 (let f ((k (read-char p)))
-                                   (if (eof-object? k)
-                                       '()
-                                       (cons k (f (read-char p)))))))))
-
-(define write-file
-    (lambda (file lst)
-        (call-with-output-file file
-            (lambda (p)
-                (let loop ((l lst))
-                    (display (car l) p)
-                    (unless (null? (cdr l))
-                        (loop (cdr l))))))))
 
 (define inputloop
   (lambda ()
