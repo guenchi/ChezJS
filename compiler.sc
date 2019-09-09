@@ -25,7 +25,7 @@
 
 
 
-(library (chezjs compiler)
+(library (compiler)
   (export
     p1
     p2
@@ -33,7 +33,7 @@
     p4
     p5
     p6
-    chezjs
+    js->scheme
   )
   (import
     (chezscheme)
@@ -45,13 +45,13 @@
 
  
   (define p1
-    (lambda (str)
+    (lambda (lst)
       (split*
         (list->string
-          (let loop ((lst (string->list str)))
-            (if (null? lst)
+          (let loop ((l lst))
+            (if (null? l)
                 '()
-                (let ((x (car lst))(y (cdr lst)))
+                (let ((x (car l))(y (cdr l)))
                      (case x
                         ((#\( #\) #\[ #\] #\{ #\} #\. #\; #\: #\+ #\- #\* #\/ #\= #\> #\<)
                          (cons #\space (cons x (cons #\space (loop y)))))
@@ -206,9 +206,9 @@
                (cons (p5 x)(p6 y))))))
 
 
-  (define chezjs
-    (lambda (str)
-      (p6 (p4 (reverse (p2 (p1 str)))))))
+  (define js->scheme
+    (lambda (lst)
+      (p6 (p4 (reverse (p2 (p1 lst)))))))
                                     
                                     
  )

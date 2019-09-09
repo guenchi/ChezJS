@@ -1,0 +1,33 @@
+":"; export CHEZSCHEMELIBDIRS=.:lib:/usr/local/lib && export CHEZSCHEMELIBEXTS=.chezscheme.sls::.chezscheme.so:.ss::.so:.sls::.so:.scm::.so:.sch::.so:.sc::.so && exec scheme --script $0 "$@";
+
+(import (compiler))
+
+(define source-name (car (command-line-arguments)))
+
+(define output-name (string-append source-name ".sc"))
+
+(define file-reader
+  (lambda (p) 
+    (let f ((k (read-char p)))
+      (if (eof-object? k)
+        '()
+        (cons k (f (read-char p)))))))
+
+(define printer
+    (lambda (lst)
+        (call-with-output-file output-name 
+            (lambda (p)
+                (let loop ((l lst))
+                    (display (car l) p)
+                    (unless (null? (cdr l))
+                        (loop (cdr l))))))))
+
+(let ()
+  (when (file-exists? output-name) (delete-file output-name))
+  (printer 
+    (js->scheme
+      (call-with-input-file source-name file-reader)))
+  (compile-file output-name))
+
+
+
