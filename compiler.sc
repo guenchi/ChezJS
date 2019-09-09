@@ -58,8 +58,7 @@
                         (#\, (cons #\space (loop y)))
                         (#\xA (loop y))
                         (else (cons x (loop y)))))))) #\space)))
- 
- 
+
  
   (define p2
     (lambda (lst)
@@ -75,7 +74,6 @@
       (if (null? lst)
           '()
           (cons (f (car lst)) (p2 (cdr lst))))))
- 
  
 
   (define p3
@@ -130,8 +128,7 @@
                 (else (loop y (cons x k)))))
             k))))
                    
- 
- 
+
   (define p5
     (lambda (lst)
       (define Var
@@ -209,10 +206,11 @@
 
   (define p6
     (lambda (lst)
-      (let ((x (car lst))(y (cdr lst)))
-           (if (null? y)
-               (cons (p5 x) '())
-               (cons (p5 x)(p6 y))))))
+      (let ((x (car lst))
+            (y (cdr lst)))
+        (if (null? y)
+            (cons (p5 x) '())
+            (cons (p5 x)(p6 y))))))
 
 
   (define js->scheme
