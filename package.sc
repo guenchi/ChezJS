@@ -9,6 +9,6 @@
     ("repl" . "scheme")
     ("run" . "scheme --script"))
 ("dependencies" 
-    ("match" . "1.0.0")
+    ("match" . "1.0.2")
     ("core" . "1.3.1"))
 ("devDependencies"))
