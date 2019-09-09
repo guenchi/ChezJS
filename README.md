@@ -9,7 +9,7 @@ compiling test.js.sc with output to test.js.so
 $ scheme test.js.so
 ```
 
-REPL:
+Repl:
 
 ```
 $ chezjs
