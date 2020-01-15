@@ -1,6 +1,6 @@
 ### ChezJS Javascript Engine
 
-JavaScript compile to Native Code (with Chez Scheme as backend)
+Compile JavaScript to Native Code (with Chez Scheme as backend)
 
 Compile to .so file:
 
